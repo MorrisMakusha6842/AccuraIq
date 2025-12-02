@@ -1,4 +1,250 @@
-<div class="flex flex-row w-full h-screen bg-red-200">
-  <p>landing-page works!</p>
-</div>
+<!-- Sticky Navigation -->
+<nav class="sticky-nav">
+  <div class="nav-container">
+    <div class="nav-logo">
+      <span class="logo-text gradient-text">AccuraIQ</span>
+    </div>
 
+    <ul class="nav-menu">
+      @for (item of navItems; track item.label) {
+      <li><a [href]="item.link">{{ item.label }}</a></li>
+      }
+    </ul>
+
+    <div class="nav-actions">
+      <button class="btn-ghost" routerLink="/log-in">Login</button>
+      <button class="btn-signup" routerLink="/sign-up">Sign Up</button>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section with Auto-Carousel -->
+<section class="hero-section">
+  <div class="carousel-container">
+    @for (slide of heroSlides; track $index) {
+    <div class="carousel-slide" [class.active]="currentSlide === $index">
+      <div class="hero-content">
+        <div class="hero-grid">
+          <div class="hero-image-column">
+            @if (slide.image) {
+            <img [src]="slide.image" alt="Hero Illustration" class="hero-image">
+            }
+          </div>
+          <div class="hero-text-column">
+            <h1 class="hero-title fade-in">{{ slide.title }}</h1>
+            <h2 class="hero-subtitle fade-in">{{ slide.subtitle }}</h2>
+            <p class="hero-description fade-in">{{ slide.description }}</p>
+          </div>
+        </div>
+        <div class="hero-cta fade-in">
+          <button class="btn-primary" routerLink="/get-started">Get Started Free</button>
+          <button class="btn-secondary">Request Demo</button>
+        </div>
+      </div>
+    </div>
+    }
+
+    <!-- Carousel Navigation -->
+    <div class="carousel-nav">
+      @for (slide of heroSlides; track $index) {
+      <button class="nav-dot" [class.active]="currentSlide === $index" (click)="goToSlide($index)">
+      </button>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="how-it-works-section">
+  <div class="container">
+    <h2 class="section-title">How It Works</h2>
+    <p class="section-subtitle">From capture to categorization in seconds</p>
+
+    <div class="steps-container">
+      @for (step of howItWorksSteps; track $index) {
+      <div class="step-item" [class.reverse]="$index % 2 !== 0">
+        <div class="step-content">
+          <div class="step-number">{{ step.step }}</div>
+          <h3 class="step-title">{{ step.title }}</h3>
+          <p class="step-description">{{ step.description }}</p>
+        </div>
+        <div class="step-visual">
+          <div class="visual-placeholder" [style.background]="'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'">
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section">
+  <div class="container">
+    <h2 class="section-title">Powerful Features</h2>
+    <p class="section-subtitle">Everything you need to manage your accounting with confidence</p>
+
+    <div class="features-grid">
+      @for (feature of features; track $index) {
+      <div class="feature-card glass-effect">
+        <span class="material-icons feature-icon">{{ feature.icon }}</span>
+        <h3 class="feature-title">{{ feature.title }}</h3>
+        <p class="feature-description">{{ feature.description }}</p>
+      </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Goals Section -->
+<section class="goals-section">
+  <div class="container">
+    <div class="goals-content">
+      <div class="goals-text">
+        <h2 class="section-title">Our Mission</h2>
+        <p class="goals-description">
+          We're revolutionizing accounting for small to medium businesses by eliminating the dependency
+          on human-only processes. Our AI-powered platform tackles the core pain points: time management,
+          human errors, fraud, miscalculations, and inconsistent work quality.
+        </p>
+        <p class="goals-description">
+          While AI handles the heavy lifting, you maintain full control over critical decisions like
+          currency rates and tax adjustments. It's the perfect balance of automation and human oversight.
+        </p>
+
+        <div class="goals-list">
+          <div class="goal-item">
+            <span class="material-icons goal-icon">track_changes</span>
+            <div>
+              <h4>Reduce Accounting Time by 80%</h4>
+              <p>Free up your team to focus on strategic growth</p>
+            </div>
+          </div>
+          <div class="goal-item">
+            <span class="material-icons goal-icon">lightbulb</span>
+            <div>
+              <h4>Eliminate Human Error</h4>
+              <p>AI-powered accuracy you can trust</p>
+            </div>
+          </div>
+          <div class="goal-item">
+            <span class="material-icons goal-icon">rocket_launch</span>
+            <div>
+              <h4>Scale Without Hiring</h4>
+              <p>Grow your business without expanding your accounting team</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="goals-visual">
+        <div class="visual-card glass-effect">
+          <div class="stat-item">
+            <div class="stat-number gradient-text">80%</div>
+            <div class="stat-label">Time Saved</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number gradient-text">99.9%</div>
+            <div class="stat-label">Accuracy Rate</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number gradient-text">24/7</div>
+            <div class="stat-label">AI Availability</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials-section">
+  <div class="container">
+    <h2 class="section-title">What Our Clients Say</h2>
+    <p class="section-subtitle">Join hundreds of businesses transforming their accounting</p>
+
+    <div class="testimonials-grid">
+      @for (testimonial of testimonials; track $index) {
+      <div class="testimonial-card glass-effect">
+        <div class="stars">
+          @for (star of getStars(testimonial.rating); track $index) {
+          <span class="star">⭐</span>
+          }
+        </div>
+        <p class="testimonial-text">"{{ testimonial.text }}"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">{{ testimonial.name.charAt(0) }}</div>
+          <div class="author-info">
+            <div class="author-name">{{ testimonial.name }}</div>
+            <div class="author-role">{{ testimonial.role }}</div>
+            <div class="author-company">{{ testimonial.company }}</div>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-column">
+        <h3 class="footer-logo gradient-text">AccuraIQ</h3>
+        <p class="footer-tagline">AI-Powered Accounting for Modern Businesses</p>
+        <div class="social-links">
+          <a href="#" class="social-link"><span class="material-icons">facebook</span></a>
+          <a href="#" class="social-link"><span class="material-icons">alternate_email</span></a>
+          <a href="#" class="social-link"><span class="material-icons">business</span></a>
+          <a href="#" class="social-link"><span class="material-icons">camera_alt</span></a>
+        </div>
+      </div>
+
+      <div class="footer-column">
+        <h4 class="footer-heading">Product</h4>
+        <ul class="footer-links">
+          <li><a href="#">Features</a></li>
+          <li><a href="#">Pricing</a></li>
+          <li><a href="#">Integrations</a></li>
+          <li><a href="#">API</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4 class="footer-heading">Company</h4>
+        <ul class="footer-links">
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4 class="footer-heading">Resources</h4>
+        <ul class="footer-links">
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Community</a></li>
+          <li><a href="#">Tutorials</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4 class="footer-heading">Legal</h4>
+        <ul class="footer-links">
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Cookie Policy</a></li>
+          <li><a href="#">GDPR</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2025 AccuraIQ. All rights reserved.</p>
+      <p>Built with ❤️ for small and medium businesses</p>
+    </div>
+  </div>
+</footer>
